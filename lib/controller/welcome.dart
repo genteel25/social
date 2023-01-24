@@ -1,5 +1,6 @@
 import 'package:social/architecture/architecture.dart';
 import 'package:social/util/package_export.dart';
+import 'package:social/util/util.dart';
 
 part '../view/welcome.dart';
 

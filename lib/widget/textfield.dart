@@ -48,8 +48,8 @@ class InputField extends StatelessWidget {
                 : null,
         hintText: hintText,
       ),
-      cursorColor: AppColors.lightest,
-      style: TextStyle(),
+      // cursorColor: AppColors.lightest,
+      style: AppTextStyles.bigBold,
     );
   }
 }

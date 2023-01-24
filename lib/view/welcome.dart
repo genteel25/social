@@ -24,7 +24,42 @@ class WelcomeView extends StatelessView<WelcomeScreen, WelcomeController> {
                 "assets/svg/background.svg",
                 fit: BoxFit.none,
               ),
-            )
+            ),
+            SizedBox(height: 61.h),
+            Padding(
+              padding: REdgeInsets.symmetric(horizontal: 44.r),
+              child: Align(
+                child: TypoWidget(
+                  data: "Find a Perfect Job match",
+                  textStyle: AppTextStyles.bigBold,
+                ),
+              ),
+            ),
+            SizedBox(height: 5.h),
+            TypoWidget(
+              data:
+                  "Finding your dream job is more easire and faster with JobHub",
+              textStyle: AppTextStyles.light,
+            ),
+            SizedBox(height: 40.h),
+            Align(
+                child: Button(
+              onPressed: () => context.goNamed("name"),
+              text: "text",
+              type: ButtonType.icon,
+              row: Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.center,
+                children: [
+                  TypoWidget(
+                      data: "Let's Get Started",
+                      textStyle:
+                          AppTextStyles.light.copyWith(color: Colors.white)),
+                  SizedBox(width: 10.h),
+                  SvgPicture.asset("assets/svg/icon.svg")
+                ],
+              ),
+            ))
           ],
         ),
       ),
