@@ -1,34 +1,23 @@
-import 'dart:math';
+import 'package:social/util/util.dart';
 
-import 'package:flutter/material.dart';
-
-void main() {
-  runApp(MyApp());
+void main() async {
+  // WidgetsBinding widgetsBinding =
+  WidgetsFlutterBinding.ensureInitialized();
+  await ScreenUtil.ensureScreenSize();
+  runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
-  MyApp({super.key});
-
-  final _random = Random();
+  const MyApp({super.key});
 
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      debugShowCheckedModeBanner: false,
-      home: Scaffold(
-        backgroundColor: Colors.black12,
-        body: Center(
-          child: AnimatedSwitcher(
-            duration: const Duration(milliseconds: 900),
-            child: Container(
-              width: _random.nextInt(150).toDouble(),
-              height: 100,
-              color: const Color.fromRGBO(0, 100, 150, 1),
-              child: const Text("Okay"),
-            ),
-          ),
-        ),
+    return ScreenUtilInit(
+      designSize: const Size(375, 812),
+      builder: (context, child) => MaterialApp.router(
+        debugShowCheckedModeBanner: false,
+        routerConfig: router,
       ),
     );
   }
