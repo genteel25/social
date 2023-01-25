@@ -1,6 +1,3 @@
-import 'package:social/controller/login.dart';
-import 'package:social/controller/welcome.dart';
-import 'package:social/util/package_export.dart';
 import 'package:social/util/util.dart';
 
 final GoRouter router = GoRouter(
@@ -14,6 +11,11 @@ final GoRouter router = GoRouter(
       name: AppStrings.login,
       path: "/login",
       builder: (context, state) => const LoginScreen(),
+    ),
+    GoRoute(
+      name: AppStrings.signup,
+      path: "/signup",
+      builder: (context, state) => const SignupScreen(),
     ),
   ],
 );

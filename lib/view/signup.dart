@@ -1,7 +1,7 @@
-part of '../controller/login.dart';
+part of '../controller/signup.dart';
 
-class LoginView extends StatelessView<LoginScreen, LoginController> {
-  const LoginView(LoginController state, {Key? key}) : super(state, key: key);
+class SignupView extends StatelessView<SignupScreen, SignupController> {
+  const SignupView(SignupController state, {Key? key}) : super(state, key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -16,7 +16,7 @@ class LoginView extends StatelessView<LoginScreen, LoginController> {
             Padding(
               padding: REdgeInsets.only(left: 10.r),
               child: TypoWidget(
-                data: "Welcome Back!",
+                data: "Register Account!",
                 textStyle: AppTextStyles.bold,
               ),
             ),
@@ -32,8 +32,13 @@ class LoginView extends StatelessView<LoginScreen, LoginController> {
             ),
             SizedBox(height: 30.h),
             InputField(
+              hintText: "User Name",
+              icon: Icons.person_outline,
+            ),
+            SizedBox(height: 24.h),
+            InputField(
               hintText: "Email address",
-              icon: Icons.mail_outline,
+              icon: Icons.person_outline,
             ),
             SizedBox(height: 24.h),
             InputField(
@@ -55,7 +60,6 @@ class LoginView extends StatelessView<LoginScreen, LoginController> {
             Button(
               text: "Sign in",
               width: 335.w,
-              onPressed: () => context.goNamed("signup"),
             ),
             SizedBox(height: 40.h),
             Align(
