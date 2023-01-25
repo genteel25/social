@@ -17,4 +17,22 @@ class AppTextStyles {
       // height: 1.2,
     ),
   );
+
+  static TextStyle bold = GoogleFonts.poppins(
+    textStyle: TextStyle(
+      fontSize: 30.sp,
+      fontWeight: FontWeight.w700,
+      height: 1.2,
+      color: AppColors.dark,
+    ),
+  );
+
+  static TextStyle smallLight = GoogleFonts.poppins(
+    textStyle: TextStyle(
+      fontSize: 12.sp,
+      fontWeight: FontWeight.w400,
+      height: 1.2,
+      color: AppColors.dark,
+    ),
+  );
 }

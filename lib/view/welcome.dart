@@ -43,23 +43,24 @@ class WelcomeView extends StatelessView<WelcomeScreen, WelcomeController> {
             ),
             SizedBox(height: 40.h),
             Align(
-                child: Button(
-              onPressed: () => context.goNamed("name"),
-              text: "text",
-              type: ButtonType.icon,
-              row: Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  TypoWidget(
-                      data: "Let's Get Started",
-                      textStyle:
-                          AppTextStyles.light.copyWith(color: Colors.white)),
-                  SizedBox(width: 10.h),
-                  SvgPicture.asset("assets/svg/icon.svg")
-                ],
+              child: Button(
+                onPressed: () => context.goNamed("login"),
+                text: "text",
+                type: ButtonType.icon,
+                row: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    TypoWidget(
+                        data: "Let's Get Started",
+                        textStyle:
+                            AppTextStyles.light.copyWith(color: Colors.white)),
+                    SizedBox(width: 10.h),
+                    SvgPicture.asset("assets/svg/icon.svg"),
+                  ],
+                ),
               ),
-            ))
+            )
           ],
         ),
       ),
