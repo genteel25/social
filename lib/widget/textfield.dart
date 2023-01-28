@@ -37,10 +37,12 @@ class InputField extends StatelessWidget {
         filled: true,
         fillColor: Colors.white,
         contentPadding: REdgeInsets.symmetric(vertical: 9.r),
-        icon: Icon(
-          icon,
-          size: 19.w.h,
-        ),
+        icon: icon != null
+            ? Icon(
+                icon,
+                size: 19.w.h,
+              )
+            : null,
         suffixIcon: type == InputType.password && show == true
             ? InkWell(
                 onTap: onPressed,

@@ -58,8 +58,9 @@ class SignupView extends StatelessView<SignupScreen, SignupController> {
             ),
             SizedBox(height: 40.h),
             Button(
-              text: "Sign in",
+              text: "Sign Up",
               width: 335.w,
+              onPressed: () => context.goNamed("bottombar"),
             ),
             SizedBox(height: 40.h),
             Align(
@@ -87,14 +88,14 @@ class SignupView extends StatelessView<SignupScreen, SignupController> {
             Align(
               child: RichText(
                 text: TextSpan(
-                  text: "New User?",
+                  text: "Already have account?",
                   style: AppTextStyles.light,
                   children: [
                     TextSpan(
-                      text: " Create Acoount",
+                      text: " Login",
                       style: AppTextStyles.light.copyWith(
                         fontWeight: FontWeight.w900,
-                        color: Color(0xff1A1D1E),
+                        color: const Color(0xff1A1D1E),
                       ),
                     ),
                   ],

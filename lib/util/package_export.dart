@@ -14,5 +14,6 @@ export 'package:go_router/go_router.dart';
 // export 'package:http/http.dart';
 // export 'package:shared_preferences/shared_preferences.dart';
 export 'package:shimmer/shimmer.dart';
+export 'package:fancy_drawer/fancy_drawer.dart';
 // export 'package:stacked_themes/stacked_themes.dart';
 // export 'package:isar/isar.dart';

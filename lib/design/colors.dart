@@ -17,4 +17,5 @@ class AppColors {
   static Color light = const Color(0xff6A6A6A);
   static Color dark = const Color(0xff1A1D1E);
   static Color primary = const Color(0xff4CA6A8);
+  // static Color ash = const Color(0xff6A6A6A)
 }
