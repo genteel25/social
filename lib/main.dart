@@ -1,8 +1,13 @@
+import 'package:social/model/api_response.dart';
 import 'package:social/util/util.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await ScreenUtil.ensureScreenSize();
+  isLogin = await SessionManager().getIsUserLoggedIn();
+  final ApiResponse response = await ApiService().loadBreakdown();
+  print(response.message);
+
   runApp(const MyApp());
 }
 

@@ -25,3 +25,5 @@ List<Map<String, dynamic>> onboarding = [
 
 bool? newUser = true;
 bool? isLoggedIn = false;
+
+bool? isLogin;

@@ -1,11 +1,13 @@
 import 'package:flutter_hidden_drawer/flutter_hidden_drawer.dart';
+import 'package:flutter_zoom_drawer/config.dart';
 import 'package:social/util/util.dart';
 import 'package:social/widget/textfield.dart';
 
 part '../view/home.dart';
 
 class HomeScreen extends StatefulWidget {
-  HomeScreen({Key? key}) : super(key: key);
+  final ZoomDrawerController drawer;
+  HomeScreen({Key? key, required this.drawer}) : super(key: key);
 
   @override
   State<HomeScreen> createState() => HomeController();

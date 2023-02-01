@@ -55,3 +55,30 @@ List<Map<String, dynamic>> popularJobs = [
     "jobType": "Remote",
   },
 ];
+
+handleDioError(DioError error) {
+  String errorDescription = "";
+  switch (error.type) {
+    case DioErrorType.cancel:
+      errorDescription = "Request to server was cancelled";
+      break;
+    case DioErrorType.connectTimeout:
+      errorDescription = "Connection timeout with server";
+      break;
+    case DioErrorType.other:
+      errorDescription =
+          "Connection to server failed due to internet connection";
+      break;
+    case DioErrorType.receiveTimeout:
+      errorDescription = "Receive timeout in connection with server";
+      break;
+    case DioErrorType.sendTimeout:
+      errorDescription = "Send Timeout in connection with Server";
+      break;
+    case DioErrorType.response:
+      errorDescription =
+          "Something went wrong and your request could not be completed";
+      break;
+  }
+  return errorDescription;
+}

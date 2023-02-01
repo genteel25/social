@@ -17,7 +17,7 @@ class HomeView extends StatelessView<HomeScreen, HomeController> {
               paddingWidget(
                   width: 20.0.r,
                   height: 0.0,
-                  child: headerRow(HomeController())),
+                  child: headerRow(HomeController(), context)),
               SizedBox(height: 20.h),
               paddingWidget(width: 20.0.r, height: 0.0.r, child: searchRow()),
               SizedBox(height: 32.h),
@@ -112,19 +112,24 @@ class HomeView extends StatelessView<HomeScreen, HomeController> {
   }
 }
 
-Widget headerRow(HomeController controller) {
+Widget headerRow(
+  HomeController controller,
+  BuildContext context,
+) {
   return Row(
     mainAxisAlignment: MainAxisAlignment.spaceBetween,
     children: [
-      Container(
-        width: 44.w,
-        height: 44.h,
-        decoration: BoxDecoration(
-          color: AppColors.primary,
-          borderRadius: BorderRadius.circular(12.r),
-        ),
-        child: GestureDetector(
-          onTap: () => {},
+      GestureDetector(
+        onTap: () {
+          ZoomDrawer.of(context)!.toggle();
+        },
+        child: Container(
+          width: 44.w,
+          height: 44.h,
+          decoration: BoxDecoration(
+            color: AppColors.primary,
+            borderRadius: BorderRadius.circular(12.r),
+          ),
           child: SvgPicture.asset(
             "assets/svg/menu.svg",
             fit: BoxFit.none,

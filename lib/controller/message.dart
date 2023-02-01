@@ -1,6 +1,5 @@
-import 'package:social/architecture/architecture.dart';
-import 'package:social/util/package_export.dart';
-
+import 'dart:math';
+import 'package:social/util/util.dart';
 part '../view/message.dart';
 
 class MessageScreen extends StatefulWidget {
@@ -10,7 +9,31 @@ class MessageScreen extends StatefulWidget {
   State<MessageScreen> createState() => MessageController();
 }
 
-class MessageController extends State<MessageScreen> {
+class MessageController extends State<MessageScreen>
+    with SingleTickerProviderStateMixin {
+  late AnimationController controller;
+  late Animation animation;
+
+  @override
+  void initState() {
+    super.initState();
+    controller = AnimationController(
+      vsync: this,
+      duration: const Duration(
+        seconds: 5,
+      ),
+    );
+    animation = Tween<double>(begin: 0, end: pi * 2).animate(controller);
+
+    controller.repeat();
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+    controller.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     return MessageView(this);

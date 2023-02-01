@@ -17,5 +17,10 @@ class AppColors {
   static Color light = const Color(0xff6A6A6A);
   static Color dark = const Color(0xff1A1D1E);
   static Color primary = const Color(0xff4CA6A8);
+  static Color orange = const Color(0xffFF5441);
+  static Color lightOrange = const Color(0xffFF9087);
+  static Color lilac = const Color(0xff2CB9B5);
+  static Color indigo = const Color(0xffFE33BF);
+  static Color tomato = const Color(0xffFF454C);
   // static Color ash = const Color(0xff6A6A6A)
 }
