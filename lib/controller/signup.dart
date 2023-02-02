@@ -13,6 +13,9 @@ class SignupScreen extends StatefulWidget {
 }
 
 class SignupController extends State<SignupScreen> {
+  final TextEditingController usernameController = TextEditingController();
+  final TextEditingController emailController = TextEditingController();
+  final TextEditingController passwordController = TextEditingController();
   bool showPassword = false;
 
   changePasswordIcon() {

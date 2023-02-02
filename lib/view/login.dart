@@ -32,11 +32,13 @@ class LoginView extends StatelessView<LoginScreen, LoginController> {
             ),
             SizedBox(height: 30.h),
             InputField(
+              controller: controller.emailController,
               hintText: "Email address",
               icon: Icons.mail_outline,
             ),
             SizedBox(height: 24.h),
             InputField(
+              controller: controller.passwordController,
               hintText: "Password",
               icon: Icons.lock_outline,
               type: InputType.password,
@@ -52,10 +54,35 @@ class LoginView extends StatelessView<LoginScreen, LoginController> {
               ),
             ),
             SizedBox(height: 40.h),
-            Button(
-              text: "Sign in",
-              width: 335.w,
-              onPressed: () => context.goNamed("signup"),
+            BlocListener<AuthBloc, AuthState>(
+              listener: (context, state) async {
+                if (state is AuthLoading) {
+                  const CircularProgressIndicator();
+                }
+                if (state is AuthSuccess) {
+                  context.goNamed("bottombar");
+                  await SessionManager().setIsUserLoggedIn();
+                }
+                if (state is AuthFailure) {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(
+                      content: Text(
+                        state.error.toString(),
+                      ),
+                    ),
+                  );
+                }
+              },
+              child: Button(
+                text: "Sign in",
+                width: 335.w,
+                onPressed: () => context.read<AuthBloc>().add(
+                      SignIn(
+                        email: controller.emailController.text,
+                        password: controller.passwordController.text,
+                      ),
+                    ),
+              ),
             ),
             SizedBox(height: 40.h),
             Align(
@@ -87,12 +114,13 @@ class LoginView extends StatelessView<LoginScreen, LoginController> {
                   style: AppTextStyles.light,
                   children: [
                     TextSpan(
-                      text: " Create Acoount",
-                      style: AppTextStyles.light.copyWith(
-                        fontWeight: FontWeight.w900,
-                        color: Color(0xff1A1D1E),
-                      ),
-                    ),
+                        text: " Create Account",
+                        style: AppTextStyles.light.copyWith(
+                          fontWeight: FontWeight.w900,
+                          color: Color(0xff1A1D1E),
+                        ),
+                        recognizer: TapGestureRecognizer()
+                          ..onTap = () => context.goNamed("signup")),
                   ],
                 ),
               ),

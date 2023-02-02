@@ -44,7 +44,10 @@ class WelcomeView extends StatelessView<WelcomeScreen, WelcomeController> {
             SizedBox(height: 40.h),
             Align(
               child: Button(
-                onPressed: () => context.goNamed("login"),
+                onPressed: () async {
+                  context.goNamed("login");
+                  await SessionManager().setFirstTimeUser();
+                },
                 text: "text",
                 type: ButtonType.icon,
                 row: Row(

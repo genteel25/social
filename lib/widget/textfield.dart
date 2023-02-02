@@ -1,4 +1,3 @@
-import 'package:social/util/package_export.dart';
 import 'package:social/util/util.dart';
 
 enum InputType { normal, password }
@@ -36,7 +35,7 @@ class InputField extends StatelessWidget {
       decoration: InputDecoration(
         filled: true,
         fillColor: Colors.white,
-        contentPadding: REdgeInsets.symmetric(vertical: 9.r),
+        contentPadding: REdgeInsets.symmetric(vertical: 14.r, horizontal: 8.r),
         icon: icon != null
             ? Icon(
                 icon,
@@ -66,9 +65,17 @@ class InputField extends StatelessWidget {
           borderSide: BorderSide.none,
           borderRadius: BorderRadius.circular(12.r),
         ),
+        focusedBorder: OutlineInputBorder(
+          borderSide: BorderSide.none,
+          borderRadius: BorderRadius.circular(12.r),
+        ),
       ),
       // cursorColor: AppColors.lightest,
-      style: AppTextStyles.bigBold,
+      style: AppTextStyles.light.copyWith(
+        letterSpacing: 0.5,
+        fontSize: 14.sp,
+        color: Colors.black,
+      ),
     );
   }
 }

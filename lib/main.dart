@@ -1,27 +1,30 @@
-import 'package:social/model/api_response.dart';
+import 'package:social/logic/job/job_bloc.dart';
 import 'package:social/util/util.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await ScreenUtil.ensureScreenSize();
   isLogin = await SessionManager().getIsUserLoggedIn();
-  final ApiResponse response = await ApiService().loadBreakdown();
-  print(response.message);
-
+  firstTimeUser = await SessionManager().getFirstTimeUser();
   runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
 
-  // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
     return ScreenUtilInit(
       designSize: const Size(375, 812),
-      builder: (context, child) => MaterialApp.router(
-        debugShowCheckedModeBanner: false,
-        routerConfig: router,
+      builder: (context, child) => MultiBlocProvider(
+        providers: [
+          BlocProvider(create: (context) => AuthBloc()),
+          BlocProvider(create: (context) => JobBloc()),
+        ],
+        child: MaterialApp.router(
+          debugShowCheckedModeBanner: false,
+          routerConfig: router,
+        ),
       ),
     );
   }

@@ -21,6 +21,14 @@ class SessionManager {
     return getPrefs().then((prefs) => prefs.getString("token"));
   }
 
+  Future<bool> setFirstTimeUser() async {
+    return getPrefs().then((prefs) => prefs.setBool("firstTimeUser", true));
+  }
+
+  Future<bool?> getFirstTimeUser() async {
+    return getPrefs().then((prefs) => prefs.getBool("firstTimeUser"));
+  }
+
   // Future<bool> newUser() async {
   //   return await getPrefs()
   //       .then((prefs) => prefs.setBool(AppStrings.newUser, false));

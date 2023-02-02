@@ -23,7 +23,27 @@ class HomeView extends StatelessView<HomeScreen, HomeController> {
               SizedBox(height: 32.h),
               paddingWidget(width: 20.0.r, height: 0.0, child: headingRow()),
               // SizedBox(height: 16.h),
-              const JobInfo(),
+              BlocBuilder<JobBloc, JobState>(
+                builder: (context, state) {
+                  if (state is JobLoading) {
+                    return CircularProgressIndicator(
+                      color: AppColors.primary,
+                    );
+                  }
+                  if (state is JobSuccess) {
+                    List<JobResponse> popularJobs = state.response
+                        .where((element) => element.popular == true)
+                        .toList();
+                    return JobInfo(
+                      job: popularJobs,
+                    );
+                  }
+                  if (state is JobFailure) {
+                    return Text(state.error.toString());
+                  }
+                  return const SizedBox();
+                },
+              ),
               SizedBox(height: 8.h),
               paddingWidget(
                 width: 20.0.r,
@@ -43,67 +63,79 @@ class HomeView extends StatelessView<HomeScreen, HomeController> {
                 ),
               ),
               SizedBox(height: 20.h),
-              paddingWidget(
-                width: 20.0.r,
-                height: 0.0,
-                child: ListView.builder(
-                  primary: false,
-                  shrinkWrap: true,
-                  itemCount: popularJobs.length,
-                  itemBuilder: (BuildContext context, int index) {
-                    return Container(
-                      padding: REdgeInsets.all(15.r),
-                      margin: REdgeInsets.only(bottom: 20.r),
-                      width: double.infinity,
-                      height: 80.h,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(20.r),
-                        color: Colors.white,
-                        boxShadow: [
-                          BoxShadow(
-                            color: const Color.fromRGBO(64, 59, 75, 0.1),
-                            blurRadius: 35,
-                            spreadRadius: -10,
-                            offset: Offset(0, 10.h),
-                          )
-                        ],
-                      ),
-                      child: Row(
-                        children: [
-                          SvgPicture.asset(popularJobs[index]['image']),
-                          SizedBox(width: 20.w),
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              SizedBox(
-                                width: 170.w,
-                                child: TypoWidget(
-                                  // wrap: ,
-                                  textAlign: TextAlign.start,
-                                  overflow: TextOverflow.ellipsis,
-                                  data: popularJobs[index]['title'],
-                                  textStyle: AppTextStyles.semibold,
+              BlocBuilder<JobBloc, JobState>(
+                builder: (context, state) {
+                  if (state is JobLoading) {
+                    return CircularProgressIndicator(color: AppColors.primary);
+                  }
+                  if (state is JobSuccess) {
+                    return paddingWidget(
+                      width: 20.0.r,
+                      height: 0.0,
+                      child: ListView.builder(
+                        primary: false,
+                        shrinkWrap: true,
+                        itemCount: state.response.length,
+                        itemBuilder: (BuildContext context, int index) {
+                          return Container(
+                            padding: REdgeInsets.all(15.r),
+                            margin: REdgeInsets.only(bottom: 20.r),
+                            width: double.infinity,
+                            height: 80.h,
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(20.r),
+                              color: Colors.white,
+                              boxShadow: [
+                                BoxShadow(
+                                  color: const Color.fromRGBO(64, 59, 75, 0.1),
+                                  blurRadius: 35,
+                                  spreadRadius: -10,
+                                  offset: Offset(0, 10.h),
+                                )
+                              ],
+                            ),
+                            child: Row(
+                              children: [
+                                SvgPicture.network(
+                                    state.response[index].companyImage!),
+                                SizedBox(width: 20.w),
+                                Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceBetween,
+                                  children: [
+                                    SizedBox(
+                                      width: 170.w,
+                                      child: TypoWidget(
+                                        // wrap: ,
+                                        textAlign: TextAlign.start,
+                                        overflow: TextOverflow.ellipsis,
+                                        data: state.response[index].title!,
+                                        textStyle: AppTextStyles.semibold,
+                                      ),
+                                    ),
+                                    TypoWidget(
+                                      data: state.response[index].jobType!,
+                                      textStyle: AppTextStyles.thin,
+                                    ),
+                                  ],
                                 ),
-                              ),
-                              TypoWidget(
-                                data: "Full Time",
-                                textStyle: AppTextStyles.thin,
-                              ),
-                            ],
-                          ),
-                          const Spacer(),
-                          TypoWidget(
-                            overflow: TextOverflow.ellipsis,
-                            data: "\$${popularJobs[index]['salary']}/m",
-                            textStyle: AppTextStyles.thin,
-                          )
-                        ],
+                                const Spacer(),
+                                TypoWidget(
+                                  overflow: TextOverflow.ellipsis,
+                                  data: "\$${state.response[index].amount!}/m",
+                                  textStyle: AppTextStyles.thin,
+                                )
+                              ],
+                            ),
+                          );
+                        },
                       ),
                     );
-                  },
-                ),
-              )
+                  }
+                  return const SizedBox();
+                },
+              ),
             ],
           ),
         ),
@@ -176,7 +208,8 @@ Widget headingRow() {
 }
 
 class JobInfo extends StatelessWidget {
-  const JobInfo({super.key});
+  final List<JobResponse> job;
+  const JobInfo({super.key, required this.job});
 
   @override
   Widget build(BuildContext context) {
@@ -189,7 +222,7 @@ class JobInfo extends StatelessWidget {
         padding: REdgeInsets.symmetric(vertical: 18.r, horizontal: 20.r),
         shrinkWrap: true,
         scrollDirection: Axis.horizontal,
-        itemCount: jobs.length,
+        itemCount: job.length,
         itemBuilder: (BuildContext context, int index) {
           return Container(
             padding: REdgeInsets.all(15.r),
@@ -218,13 +251,13 @@ class JobInfo extends StatelessWidget {
                     Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        SvgPicture.asset(
-                          jobs[index]['image'],
+                        SvgPicture.network(
+                          job[index].companyImage!,
                           // fit: BoxFit.none,
                         ),
                         SizedBox(height: 5.h),
                         TypoWidget(
-                          data: jobs[index]['name'],
+                          data: job[index].companyName!,
                           textStyle: AppTextStyles.thin.copyWith(
                             color: AppColors.light,
                           ),
@@ -237,19 +270,19 @@ class JobInfo extends StatelessWidget {
                 // SizedBox(height: 20.h),
                 const Spacer(),
                 TypoWidget(
-                  data: jobs[index]['title'],
+                  data: job[index].title!,
                   textStyle: AppTextStyles.semibold,
                 ),
                 SizedBox(height: 16.h),
                 RichText(
                   text: TextSpan(
-                    text: "\$${jobs[index]['salary']}/m  ",
+                    text: "\$${job[index].amount}/m  ",
                     style: AppTextStyles.thin.copyWith(
                       fontWeight: FontWeight.w600,
                     ),
                     children: [
                       TextSpan(
-                        text: jobs[index]['location'],
+                        text: job[index].location,
                         style: AppTextStyles.thin,
                       ),
                     ],

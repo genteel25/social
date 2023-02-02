@@ -27,3 +27,4 @@ bool? newUser = true;
 bool? isLoggedIn = false;
 
 bool? isLogin;
+bool? firstTimeUser;

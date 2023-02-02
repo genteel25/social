@@ -32,16 +32,19 @@ class SignupView extends StatelessView<SignupScreen, SignupController> {
             ),
             SizedBox(height: 30.h),
             InputField(
+              controller: controller.usernameController,
               hintText: "User Name",
               icon: Icons.person_outline,
             ),
             SizedBox(height: 24.h),
             InputField(
+              controller: controller.emailController,
               hintText: "Email address",
-              icon: Icons.person_outline,
+              icon: Icons.mail_outline,
             ),
             SizedBox(height: 24.h),
             InputField(
+              controller: controller.passwordController,
               hintText: "Password",
               icon: Icons.lock_outline,
               type: InputType.password,
@@ -57,10 +60,33 @@ class SignupView extends StatelessView<SignupScreen, SignupController> {
               ),
             ),
             SizedBox(height: 40.h),
-            Button(
-              text: "Sign Up",
-              width: 335.w,
-              onPressed: () => context.goNamed("bottombar"),
+            BlocListener<AuthBloc, AuthState>(
+              listener: (context, state) {
+                if (state is AuthLoading) {}
+                if (state is AuthSuccess) {
+                  context.goNamed("bottombar");
+                }
+                if (state is AuthFailure) {
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(
+                      content: Text(
+                        state.error.toString(),
+                      ),
+                    ),
+                  );
+                }
+              },
+              child: Button(
+                text: "Sign Up",
+                width: 335.w,
+                onPressed: () => context.read<AuthBloc>().add(
+                      SignUp(
+                        username: controller.usernameController.text,
+                        email: controller.emailController.text,
+                        password: controller.passwordController.text,
+                      ),
+                    ),
+              ),
             ),
             SizedBox(height: 40.h),
             Align(

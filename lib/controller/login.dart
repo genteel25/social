@@ -1,3 +1,4 @@
+import 'package:flutter/gestures.dart';
 import 'package:social/architecture/architecture.dart';
 import 'package:social/util/package_export.dart';
 import 'package:social/util/util.dart';
@@ -13,6 +14,8 @@ class LoginScreen extends StatefulWidget {
 }
 
 class LoginController extends State<LoginScreen> {
+  final TextEditingController emailController = TextEditingController();
+  final TextEditingController passwordController = TextEditingController();
   bool showPassword = false;
 
   changePasswordIcon() {
