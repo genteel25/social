@@ -1,5 +1,6 @@
-import 'package:social/architecture/architecture.dart';
-import 'package:social/util/package_export.dart';
+import 'dart:io';
+
+import 'package:file_picker/file_picker.dart';
 import 'package:social/util/util.dart';
 import 'package:social/widget/textfield.dart';
 
@@ -13,6 +14,26 @@ class ProfileScreen extends StatefulWidget {
 }
 
 class ProfileController extends State<ProfileScreen> {
+  File? file;
+  pickFile() async {
+    FilePickerResult? result = await FilePicker.platform.pickFiles(
+      type: FileType.image,
+      allowedExtensions: ['jpg', 'png'],
+    );
+
+    if (result != null) {
+      setState(() {
+        file = File(result.files.single.path!);
+      });
+    }
+  }
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return ProfileView(this);
