@@ -28,3 +28,7 @@ bool? isLoggedIn = false;
 
 bool? isLogin;
 bool? firstTimeUser;
+Map<String, dynamic>? userInfo;
+String? username;
+String? image;
+String? email;

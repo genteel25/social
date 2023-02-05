@@ -168,7 +168,16 @@ Widget headerRow(
           ),
         ),
       ),
-      Image.asset("assets/svg/pes.png"),
+      image == null
+          ? Image.asset("assets/svg/pes.png")
+          : ClipRRect(
+              borderRadius: BorderRadius.circular(40.r),
+              child: Image.network(
+                image!,
+                width: 40.w,
+                height: 40.h,
+              ),
+            ),
     ],
   );
 }

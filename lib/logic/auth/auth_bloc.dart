@@ -5,7 +5,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
   AuthBloc() : super(AuthInitial()) {
     on<SignIn>((event, emit) => signIn(event, emit));
     on<SignUp>((event, emit) => signUp(event, emit));
-    // on<VerifyUser>((event, emit) => verifyUser(event, emit));
+    on<UpdateProfile>((event, emit) => updateProfile(event, emit));
     // on<ResendOtp>((event, emit) => resendOtpss(event, emit));
     // on<ForgotPassword>((event, emit) => forgotPassword(event, emit));
   }
@@ -17,6 +17,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
           await repository.signIn(event.email, event.password);
 
       if (auth.status == true) {
+        await SessionManager().setUserId(auth.userId!);
         await SessionManager().setToken(auth.token!);
         await SessionManager().setToken(auth.token!);
         emit(AuthSuccess(response: auth));
@@ -34,6 +35,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       final ApiResponse auth =
           await repository.signUp(event.username, event.email, event.password);
       if (auth.status == true) {
+        await SessionManager().setUserId(auth.userId!);
         emit(AuthSuccess(response: auth));
       } else {
         emit(AuthFailure(error: auth.message.toString()));
@@ -42,6 +44,19 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
       emit(AuthFailure(error: e.toString()));
     }
   }
+}
+
+updateProfile(event, emit) async {
+  emit(AuthLoading());
+  var data = await repository.updateProfile(
+    event.username,
+    event.email,
+    event.password,
+    event.file,
+  );
+  print(data);
+  data.fold((l) => emit(AuthFailure(error: l.toString())),
+      (r) => emit(AuthSuccess(response: r)));
 }
 
 // verifyUser(event, emit) async {

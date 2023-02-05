@@ -1,3 +1,5 @@
+import 'dart:io';
+
 abstract class AuthEvent {}
 
 class SignUp extends AuthEvent {
@@ -22,11 +24,17 @@ class SignIn extends AuthEvent {
   });
 }
 
-class VerifyUser extends AuthEvent {
-  final String code;
+class UpdateProfile extends AuthEvent {
+  final String username;
+  final String email;
+  final String password;
+  final File file;
 
-  VerifyUser({
-    required this.code,
+  UpdateProfile({
+    required this.username,
+    required this.email,
+    required this.password,
+    required this.file,
   });
 }
 

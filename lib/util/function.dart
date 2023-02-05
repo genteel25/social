@@ -1,4 +1,8 @@
+import 'package:jwt_decode/jwt_decode.dart';
+import 'package:social/model/user_model.dart';
+import 'package:social/util/global_variables.dart';
 import 'package:social/util/package_export.dart';
+import 'package:social/util/util.dart';
 
 Padding paddingWidget(
     {required double width, double? height, required Widget child}) {
@@ -81,4 +85,35 @@ handleDioError(DioError error) {
       break;
   }
   return errorDescription;
+}
+
+getToken() async {
+  String? token = await SessionManager().getToken();
+  var jwtToken = Jwt.parseJwt(token!);
+  // setState(() {
+  userInfo = jwtToken;
+  if (userInfo!['email'] != null) {
+    await SessionManager().setUserEmail(userInfo!['email']);
+    email = await SessionManager().getUserEmail();
+  }
+  if (userInfo!['username'] != null) {
+    await SessionManager().setUserName(userInfo!['username']);
+    username = await SessionManager().getUserName();
+  }
+  if (userInfo!['image'] != null) {
+    await SessionManager().setUserProfileImage(userInfo!['image']);
+    image = await SessionManager().getUserProfileImage();
+  }
+
+  // });
+}
+
+setUpdatedToken(UserModel user) async {
+  await SessionManager().setUserEmail(user.email);
+  await SessionManager().setUserName(user.username);
+  await SessionManager().setUserProfileImage(user.ownerImage!);
+
+  email = await SessionManager().getUserEmail();
+  username = await SessionManager().getUserName();
+  image = await SessionManager().getUserProfileImage();
 }

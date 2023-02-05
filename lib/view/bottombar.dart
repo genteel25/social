@@ -35,21 +35,31 @@ class BottomBarView
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 SizedBox(height: 100.h),
-                Image.asset(
-                  "assets/svg/pes.png",
-                  width: 80.w,
-                  height: 80.h,
-                  fit: BoxFit.contain,
-                ),
+                image == null
+                    ? Image.asset(
+                        "assets/svg/pes.png",
+                        width: 80.w,
+                        height: 80.h,
+                        fit: BoxFit.contain,
+                      )
+                    : ClipRRect(
+                        borderRadius: BorderRadius.circular(80.r),
+                        child: Image.network(
+                          image!,
+                          width: 80.w,
+                          height: 80.h,
+                          fit: BoxFit.cover,
+                        ),
+                      ),
                 SizedBox(height: 20.h),
                 TypoWidget(
-                  data: "Oyedele Yusuf",
+                  data: username!,
                   textAlign: TextAlign.start,
                   textStyle: AppTextStyles.semibold.copyWith(fontSize: 30.sp),
                 ),
                 SizedBox(height: 10.h),
                 TypoWidget(
-                  data: "oyedeleyusuff@gmail.com",
+                  data: email!,
                   textStyle: AppTextStyles.smallLight.copyWith(
                     fontSize: 14.sp,
                     color: AppColors.light,
@@ -157,28 +167,36 @@ class BottomBarView
                   ],
                 ),
                 SizedBox(height: 142.h),
-                Row(
-                  children: [
-                    Container(
-                      width: 36.w,
-                      height: 36.h,
-                      decoration: BoxDecoration(
-                        color: AppColors.tomato,
-                        borderRadius: BorderRadius.circular(40.r),
+                GestureDetector(
+                  onTap: () async {
+                    final bool? isLog = await SessionManager().logout();
+                    if (isLog == true) {
+                      context.goNamed("login");
+                    }
+                  },
+                  child: Row(
+                    children: [
+                      Container(
+                        width: 36.w,
+                        height: 36.h,
+                        decoration: BoxDecoration(
+                          color: AppColors.tomato,
+                          borderRadius: BorderRadius.circular(40.r),
+                        ),
+                        child: SvgPicture.asset(
+                          "assets/new/logout.svg",
+                          fit: BoxFit.none,
+                        ),
                       ),
-                      child: SvgPicture.asset(
-                        "assets/new/logout.svg",
-                        fit: BoxFit.none,
-                      ),
-                    ),
-                    SizedBox(width: 15.w),
-                    TypoWidget(
-                      data: "Logout",
-                      textStyle: AppTextStyles.smallLight.copyWith(
-                        fontSize: 16.sp,
-                      ),
-                    )
-                  ],
+                      SizedBox(width: 15.w),
+                      TypoWidget(
+                        data: "Logout",
+                        textStyle: AppTextStyles.smallLight.copyWith(
+                          fontSize: 16.sp,
+                        ),
+                      )
+                    ],
+                  ),
                 ),
               ],
             ),

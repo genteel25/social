@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:social/util/package_export.dart';
 
 class SessionManager {
@@ -27,6 +29,45 @@ class SessionManager {
 
   Future<bool?> getFirstTimeUser() async {
     return getPrefs().then((prefs) => prefs.getBool("firstTimeUser"));
+  }
+
+  Future<bool?> logout() async {
+    return getPrefs().then((prefs) => prefs.remove("login"));
+  }
+
+  Future<bool?> setUserId(String userid) async {
+    return getPrefs().then((prefs) => prefs.setString("userId", userid));
+  }
+
+  Future<String?> getUserId() async {
+    return getPrefs().then((prefs) => prefs.getString("userId"));
+  }
+
+  Future<bool?> setUserProfileImage(String image) async {
+    // String base64Image = base64Encode(image);
+    return getPrefs().then((prefs) => prefs.setString("image", image));
+  }
+
+  Future<String?> getUserProfileImage() async {
+    return getPrefs().then((prefs) => prefs.getString("image"));
+  }
+
+  Future<bool?> setUserName(String name) async {
+    // String base64Image = base64Encode(image);
+    return getPrefs().then((prefs) => prefs.setString("name", name));
+  }
+
+  Future<String?> getUserName() async {
+    return getPrefs().then((prefs) => prefs.getString("name"));
+  }
+
+  Future<bool?> setUserEmail(String email) async {
+    // String base64Image = base64Encode(image);
+    return getPrefs().then((prefs) => prefs.setString("email", email));
+  }
+
+  Future<String?> getUserEmail() async {
+    return getPrefs().then((prefs) => prefs.getString("email"));
   }
 
   // Future<bool> newUser() async {

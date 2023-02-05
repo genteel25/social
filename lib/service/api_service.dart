@@ -1,4 +1,7 @@
+import 'dart:io';
+
 import 'package:fpdart/fpdart.dart';
+import 'package:social/model/user_model.dart';
 import 'package:social/util/util.dart';
 
 class ApiService {
@@ -43,11 +46,14 @@ class ApiService {
     });
   }
 
-  Future<Response> doPostRequest(
-      String endPoint, Map<String, dynamic> data) async {
+  Future<Response> doPostRequest(String endPoint, data) async {
     return await _dio().then((value) {
       return value.post(endPoint, data: data);
     });
+  }
+
+  Future<Response> doPutRequest(String endpoint, FormData data) async {
+    return await _dio().then((value) => value.put(endpoint, data: data));
   }
 
   Future<ApiResponse> signIn(String email, String password) async {
@@ -60,11 +66,13 @@ class ApiService {
           status: true,
           message: result['message'],
           token: result['token'],
+          userId: result['id'],
         );
       } else if (response.statusCode == 400 || response.statusCode == 401) {
         return ApiResponse(
           status: result['status'],
           message: result['message'],
+          userId: result['id'],
         );
       } else {
         return ApiResponse(
@@ -130,6 +138,39 @@ class ApiService {
       }
     } on DioError catch (e) {
       return left(handleDioError(e));
+    }
+  }
+
+  Future<Either<String, ApiResponse>> updateProfile(
+      String? username, String? email, String? password, File? file) async {
+    // var formData = FormData.fromMap(map)
+    String? userId = await SessionManager().getUserId();
+    // print(await MultipartFile.fromFile(file!.path));
+    try {
+      String filename = file!.path.split('/').last;
+      var formData = FormData.fromMap({
+        "username": username,
+        "email": email,
+        "password": password,
+        "image": await MultipartFile.fromFile(file.path, filename: filename)
+      });
+      Response response = await doPutRequest(
+        "/auth/update/$userId",
+        formData,
+      );
+      var result = response.data;
+      if (response.statusCode == 201 || response.statusCode == 200) {
+        return Right(
+          ApiResponse(
+            status: true,
+            userInfo: UserModel.fromJson(result['info']),
+          ),
+        );
+      } else {
+        return Right(ApiResponse(status: false));
+      }
+    } on DioError catch (e) {
+      return Left(handleDioError(e));
     }
   }
 }

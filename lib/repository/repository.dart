@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:fpdart/fpdart.dart';
 import 'package:social/util/util.dart';
 
@@ -15,5 +17,14 @@ class Repository {
 
   Future<Either> getAllJobs() {
     return _apiService.getJobs();
+  }
+
+  Future<Either> updateProfile(
+    String? username,
+    String? email,
+    String? password,
+    File? file,
+  ) async {
+    return await _apiService.updateProfile(username, email, password, file);
   }
 }

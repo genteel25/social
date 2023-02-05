@@ -35,22 +35,31 @@ class ProfileView extends StatelessView<ProfileScreen, ProfileController> {
                   shadowColor: AppColors.light.withOpacity(0.2),
                   child: Stack(
                     children: [
-                      controller.file == null
-                          ? Image.asset(
-                              "assets/svg/pes.png",
-                              width: 80.w,
-                              height: 80.h,
-                              fit: BoxFit.contain,
-                            )
-                          : ClipRRect(
+                      controller.file != null
+                          ? ClipRRect(
                               borderRadius: BorderRadius.circular(80.r),
                               child: Image.file(
                                 controller.file!,
                                 width: 80.w,
                                 height: 80.h,
-                                fit: BoxFit.cover,
                               ),
-                            ),
+                            )
+                          : image == null
+                              ? Image.asset(
+                                  "assets/svg/pes.png",
+                                  width: 80.w,
+                                  height: 80.h,
+                                  fit: BoxFit.contain,
+                                )
+                              : ClipRRect(
+                                  borderRadius: BorderRadius.circular(80.r),
+                                  child: Image.network(
+                                    image!,
+                                    width: 80.w,
+                                    height: 80.h,
+                                    fit: BoxFit.cover,
+                                  ),
+                                ),
                       Positioned(
                         bottom: 5,
                         right: 0,
@@ -77,7 +86,7 @@ class ProfileView extends StatelessView<ProfileScreen, ProfileController> {
               ),
               SizedBox(height: 20.h),
               TypoWidget(
-                data: "Oyedele Yusuff",
+                data: username!,
                 textStyle: AppTextStyles.semibold.copyWith(
                   fontSize: 30.sp,
                 ),
@@ -93,7 +102,10 @@ class ProfileView extends StatelessView<ProfileScreen, ProfileController> {
                         AppTextStyles.light.copyWith(color: Colors.grey[800])),
               ),
               SizedBox(height: 10.h),
-              InputField(hintText: "Oyedele Yusuff"),
+              InputField(
+                hintText: "Oyedele Yusuff",
+                controller: controller.nameController,
+              ),
               SizedBox(height: 30.h),
               Align(
                 alignment: Alignment.centerLeft,
@@ -103,7 +115,10 @@ class ProfileView extends StatelessView<ProfileScreen, ProfileController> {
                         AppTextStyles.light.copyWith(color: Colors.grey[800])),
               ),
               SizedBox(height: 10.h),
-              InputField(hintText: "oyedeleyusuff@gmail.com"),
+              InputField(
+                hintText: "oyedeleyusuff@gmail.com",
+                controller: controller.emailController,
+              ),
               SizedBox(height: 30.h),
               Align(
                 alignment: Alignment.centerLeft,
@@ -113,11 +128,30 @@ class ProfileView extends StatelessView<ProfileScreen, ProfileController> {
                         AppTextStyles.light.copyWith(color: Colors.grey[800])),
               ),
               SizedBox(height: 10.h),
-              InputField(hintText: "********"),
+              InputField(
+                hintText: "********",
+                controller: controller.passwordControllr,
+              ),
               SizedBox(height: 50.h),
-              SizedBox(
-                width: double.infinity,
-                child: Button(text: "Save"),
+              BlocListener<AuthBloc, AuthState>(
+                listener: (context, state) async {
+                  if (state is AuthSuccess) {
+                    context.pushNamed("bottombar");
+                    setUpdatedToken(state.response.userInfo!);
+                  }
+                },
+                child: SizedBox(
+                  width: double.infinity,
+                  child: Button(
+                    text: "Save",
+                    onPressed: () => context.read<AuthBloc>().add(UpdateProfile(
+                          username: controller.nameController.text,
+                          email: controller.emailController.text,
+                          password: controller.passwordControllr.text,
+                          file: controller.file!,
+                        )),
+                  ),
+                ),
               ),
             ],
           ),
