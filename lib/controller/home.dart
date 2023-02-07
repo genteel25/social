@@ -4,6 +4,7 @@ import 'package:social/logic/job/job_bloc.dart';
 import 'package:social/logic/job/job_event.dart';
 import 'package:social/logic/job/job_state.dart';
 import 'package:social/util/util.dart';
+import 'package:social/widget/search_filter.dart';
 import 'package:social/widget/textfield.dart';
 
 part '../view/home.dart';

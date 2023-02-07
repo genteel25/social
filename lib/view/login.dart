@@ -62,6 +62,7 @@ class LoginView extends StatelessView<LoginScreen, LoginController> {
                 if (state is AuthSuccess) {
                   context.goNamed("bottombar");
                   await SessionManager().setIsUserLoggedIn();
+                  hasUpdated = false;
                 }
                 if (state is AuthFailure) {
                   ScaffoldMessenger.of(context).showSnackBar(

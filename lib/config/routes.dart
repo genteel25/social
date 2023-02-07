@@ -1,5 +1,6 @@
 import 'package:elegant_notification/elegant_notification.dart';
 import 'package:social/controller/bottombar.dart';
+import 'package:social/controller/search.dart';
 import 'package:social/util/util.dart';
 
 final GoRouter router = GoRouter(
@@ -35,6 +36,11 @@ final GoRouter router = GoRouter(
       name: AppStrings.bottombar,
       path: "/bottombar",
       builder: (context, state) => const BottomBarScreen(),
+    ),
+    GoRoute(
+      name: AppStrings.search,
+      path: "/search",
+      builder: (context, state) => const SearchScreen(),
     ),
   ],
 );

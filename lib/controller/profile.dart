@@ -1,8 +1,6 @@
-import 'dart:developer';
 import 'dart:io';
 
 import 'package:file_picker/file_picker.dart';
-import 'package:jwt_decode/jwt_decode.dart';
 import 'package:social/util/util.dart';
 import 'package:social/widget/textfield.dart';
 
@@ -16,9 +14,12 @@ class ProfileScreen extends StatefulWidget {
 }
 
 class ProfileController extends State<ProfileScreen> {
-  final TextEditingController nameController = TextEditingController();
-  final TextEditingController emailController = TextEditingController();
-  final TextEditingController passwordControllr = TextEditingController();
+  final TextEditingController nameController =
+      TextEditingController(text: username);
+  final TextEditingController emailController =
+      TextEditingController(text: email);
+  final TextEditingController passwordControllr =
+      TextEditingController(text: "******");
 
   File? file;
 

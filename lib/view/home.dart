@@ -19,7 +19,13 @@ class HomeView extends StatelessView<HomeScreen, HomeController> {
                   height: 0.0,
                   child: headerRow(HomeController(), context)),
               SizedBox(height: 20.h),
-              paddingWidget(width: 20.0.r, height: 0.0.r, child: searchRow()),
+              paddingWidget(
+                  width: 20.0.r,
+                  height: 0.0.r,
+                  child: Search(
+                    onPressed: () => context.pushNamed("search"),
+                    hintText: "Search here...",
+                  )),
               SizedBox(height: 32.h),
               paddingWidget(width: 20.0.r, height: 0.0, child: headingRow()),
               // SizedBox(height: 16.h),
@@ -176,35 +182,39 @@ Widget headerRow(
                 image!,
                 width: 40.w,
                 height: 40.h,
+                fit: BoxFit.cover,
               ),
             ),
     ],
   );
 }
 
-Widget searchRow() {
-  return Row(
-    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-    children: [
-      SizedBox(
-        width: 266.w,
-        child: InputField(hintText: "Search here..."),
-      ),
-      Container(
-        width: 44.w,
-        height: 44.h,
-        decoration: BoxDecoration(
-          color: AppColors.primary,
-          borderRadius: BorderRadius.circular(12.r),
-        ),
-        child: SvgPicture.asset(
-          "assets/svg/filter.svg",
-          fit: BoxFit.none,
-        ),
-      )
-    ],
-  );
-}
+// Widget searchRow(BuildContext context) {
+//   return Row(
+//     mainAxisAlignment: MainAxisAlignment.spaceBetween,
+//     children: [
+//       SizedBox(
+//         width: 266.w,
+//         child: InputField(
+//           hintText: "Search here...",
+//           onPressed: () => context.pushNamed("search"),
+//         ),
+//       ),
+//       Container(
+//         width: 44.w,
+//         height: 44.h,
+//         decoration: BoxDecoration(
+//           color: AppColors.primary,
+//           borderRadius: BorderRadius.circular(12.r),
+//         ),
+//         child: SvgPicture.asset(
+//           "assets/svg/filter.svg",
+//           fit: BoxFit.none,
+//         ),
+//       )
+//     ],
+//   );
+// }
 
 Widget headingRow() {
   return Row(

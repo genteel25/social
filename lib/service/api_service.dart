@@ -67,6 +67,7 @@ class ApiService {
           message: result['message'],
           token: result['token'],
           userId: result['id'],
+          userInfo: UserModel.fromJson(result['user']),
         );
       } else if (response.statusCode == 400 || response.statusCode == 401) {
         return ApiResponse(

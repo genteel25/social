@@ -6,8 +6,7 @@ void main() async {
   await ScreenUtil.ensureScreenSize();
   isLogin = await SessionManager().getIsUserLoggedIn();
   firstTimeUser = await SessionManager().getFirstTimeUser();
-  getToken();
-
+  setUpdatedToken();
   runApp(const MyApp());
 }
 

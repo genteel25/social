@@ -87,33 +87,33 @@ handleDioError(DioError error) {
   return errorDescription;
 }
 
-getToken() async {
-  String? token = await SessionManager().getToken();
-  var jwtToken = Jwt.parseJwt(token!);
-  // setState(() {
-  userInfo = jwtToken;
-  if (userInfo!['email'] != null) {
-    await SessionManager().setUserEmail(userInfo!['email']);
-    email = await SessionManager().getUserEmail();
-  }
-  if (userInfo!['username'] != null) {
-    await SessionManager().setUserName(userInfo!['username']);
-    username = await SessionManager().getUserName();
-  }
-  if (userInfo!['image'] != null) {
-    await SessionManager().setUserProfileImage(userInfo!['image']);
-    image = await SessionManager().getUserProfileImage();
-  }
-
-  // });
-}
-
-setUpdatedToken(UserModel user) async {
+getToken(UserModel user) async {
   await SessionManager().setUserEmail(user.email);
   await SessionManager().setUserName(user.username);
-  await SessionManager().setUserProfileImage(user.ownerImage!);
+  if (user.ownerImage != null) {
+    await SessionManager().setUserProfileImage(user.ownerImage!);
+  } else {
+    await SessionManager().setUserProfileImage(
+        "https://images.unsplash.com/flagged/photo-1570612861542-284f4c12e75f?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxzZWFyY2h8M3x8cGVyc29ufGVufDB8fDB8fA%3D%3D&auto=format&fit=crop&w=500&q=60");
+  }
 
   email = await SessionManager().getUserEmail();
   username = await SessionManager().getUserName();
   image = await SessionManager().getUserProfileImage();
+  // if (user.ownerImage == null) {
+  //   image = '';
+  // } else {
+  // }
+}
+
+setUpdatedToken() async {
+  // await SessionManager().setUserEmail(user.email);
+  // await SessionManager().setUserName(user.username);
+  // await SessionManager().setUserProfileImage(user.ownerImage!);
+
+  email = await SessionManager().getUserEmail();
+  username = await SessionManager().getUserName();
+  image = await SessionManager().getUserProfileImage();
+  // String? token = await SessionManager().getToken();
+  // var jwtToken = Jwt.parseJwt(token!);
 }

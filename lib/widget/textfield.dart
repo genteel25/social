@@ -25,7 +25,7 @@ class InputField extends StatelessWidget {
       textAlignVertical: TextAlignVertical.center,
       // textAlign: TextAlign.center,
       controller: controller,
-
+      onTap: onPressed,
       // obscuringCharacter: "*",
       obscureText: type == InputType.password && show != true
           ? true

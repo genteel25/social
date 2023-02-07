@@ -39,7 +39,6 @@ class SettingController extends State<SettingScreen> {
   @override
   void initState() {
     super.initState();
-    print(checkStatus(40).description);
   }
 
   Widget build(BuildContext context) {

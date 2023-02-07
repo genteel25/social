@@ -137,19 +137,24 @@ class ProfileView extends StatelessView<ProfileScreen, ProfileController> {
                 listener: (context, state) async {
                   if (state is AuthSuccess) {
                     context.pushNamed("bottombar");
-                    setUpdatedToken(state.response.userInfo!);
+                    print(state.response.userInfo!.email);
+                    getToken(state.response.userInfo!);
                   }
                 },
                 child: SizedBox(
                   width: double.infinity,
                   child: Button(
                     text: "Save",
-                    onPressed: () => context.read<AuthBloc>().add(UpdateProfile(
-                          username: controller.nameController.text,
-                          email: controller.emailController.text,
-                          password: controller.passwordControllr.text,
-                          file: controller.file!,
-                        )),
+                    onPressed: () {
+                      if (controller.file != null) {
+                        context.read<AuthBloc>().add(UpdateProfile(
+                              username: controller.nameController.text,
+                              email: controller.emailController.text,
+                              password: controller.passwordControllr.text,
+                              file: controller.file!,
+                            ));
+                      }
+                    },
                   ),
                 ),
               ),

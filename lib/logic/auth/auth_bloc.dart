@@ -1,4 +1,3 @@
-import 'package:social/model/api_response.dart';
 import 'package:social/util/util.dart';
 
 class AuthBloc extends Bloc<AuthEvent, AuthState> {
@@ -20,6 +19,7 @@ class AuthBloc extends Bloc<AuthEvent, AuthState> {
         await SessionManager().setUserId(auth.userId!);
         await SessionManager().setToken(auth.token!);
         await SessionManager().setToken(auth.token!);
+        getToken(auth.userInfo!);
         emit(AuthSuccess(response: auth));
       } else {
         emit(AuthFailure(error: auth.message.toString()));
@@ -54,7 +54,6 @@ updateProfile(event, emit) async {
     event.password,
     event.file,
   );
-  print(data);
   data.fold((l) => emit(AuthFailure(error: l.toString())),
       (r) => emit(AuthSuccess(response: r)));
 }

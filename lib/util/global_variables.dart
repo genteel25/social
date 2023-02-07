@@ -32,3 +32,5 @@ Map<String, dynamic>? userInfo;
 String? username;
 String? image;
 String? email;
+
+bool? hasUpdated;
